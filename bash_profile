@@ -11,6 +11,12 @@
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
 
+ mtrfunction() { sudo /usr/local/sbin/mtr $1; }
+ alias mtr=mtrfunction
+ export PATH="/usr/local/sbin/:$PATH"
+ export EDITOR=vim
+
+
 # If not running interactively, don't do anything!
 [[ $- != *i* ]] && return
 
@@ -42,6 +48,19 @@ shopt -s histappend
 # instead of using /etc/DIR_COLORS. Try to use the external file
 # first to take advantage of user additions. Use internal bash
 # globbing instead of external grep binary.
+
+#Automatically colorize man pages
+man() {
+    env \
+        LESS_TERMCAP_mb=$'\e[1;31m' \
+        LESS_TERMCAP_md=$'\e[1;31m' \
+        LESS_TERMCAP_me=$'\e[0m' \
+        LESS_TERMCAP_se=$'\e[0m' \
+        LESS_TERMCAP_so=$'\e[1;44;33m' \
+        LESS_TERMCAP_ue=$'\e[0m' \
+        LESS_TERMCAP_us=$'\e[1;32m' \
+            man "$@"
+}
 
 # sanitize TERM:
 safe_term=${TERM//[^[:alnum:]]/?}
@@ -106,3 +125,8 @@ alias grep="grep --color=auto"
 #fi
 #fi
  # esac
+alias ec2db="ssh -i 'us-west-2.pem' ec2-user@52.25.37.206"
+alias bidb="ssh -i 'us-west-2.pem' ec2-user@52.10.62.128"
+alias l="ls"
+alias gnew="git checkout origin/master -b "
+alias pantheon="ssh -i 'Pantheon2.pem' ubuntu@ec2-52-39-85-167.us-west-2.compute.amazonaws.com"
