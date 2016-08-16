@@ -125,8 +125,3 @@ alias grep="grep --color=auto"
 #fi
 #fi
  # esac
-alias ec2db="ssh -i 'us-west-2.pem' ec2-user@52.25.37.206"
-alias bidb="ssh -i 'us-west-2.pem' ec2-user@52.10.62.128"
-alias l="ls"
-alias gnew="git checkout origin/master -b "
-alias pantheon="ssh -i 'Pantheon2.pem' ubuntu@ec2-52-39-85-167.us-west-2.compute.amazonaws.com"
