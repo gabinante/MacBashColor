@@ -11,10 +11,10 @@
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
 
- mtrfunction() { sudo /usr/local/sbin/mtr $1; }
- alias mtr=mtrfunction
- export PATH="/usr/local/sbin/:$PATH"
- export EDITOR=vim
+export PATH="/usr/local/sbin/:$PATH"
+export EDITOR=vim
+export HISTFILESIZE=
+export HISTSIZE=
 
 
 # If not running interactively, don't do anything!
@@ -28,20 +28,6 @@ shopt -s checkwinsize
 
 # Enable history appending instead of overwriting.
 shopt -s histappend
-
-#case ${TERM} in
-#  xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
-#    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%printfs@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-#  screen)
-#    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%printfs@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-#esac
-
-# fortune is a simple program that displays a pseudorandom message
-# from a database of quotations at logon and/or logout.
-# If you wish to use it, please install "fortune-mod" from the
-# official repositories, then uncomment the following line:
-
-# [[ "$PS1" ]] && /usr/bin/fortune
 
 # Set colorful PS1 only on colorful terminals.
 # dircolors --print-database uses its own built-in database
@@ -89,39 +75,26 @@ PS1="then$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\0
 # Use this other PS1 string if you want \W for root and \andw for all other users:
 # PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\00m33[01;31m\]\h\[\033[01;34m\] \W'; else echo '\[\033[01;32m\]\u@\h\[\033[01;34m\] \w'; fi) \$([[ \$? != 0 ]] && echo \"\[\033[01;31m\]:(\[\033[01;34m\] \")\\$\[\033[00m\] "
 
+# show root@ wehen we do not have colors
+
+PS1="\u@\h \w \$ "
+
+# Use this other PS1 string if you want \W for root and \w  for all other users:
+# PS1="\u@\h $(if [[ ${EUID} == 0 ]]; then echo 'echo\W'; else echo '\w'; fi) \$([[ \$? != 0 ]] && echo \":( \")\$ "
+
+
+  PS2="> "
+  PS3="> "
+  PS4="+ "
+
+# Try to keep environment pollution down, EPA loves us.
+unset safe_term match_lhs
+
+# Some nice aliases mostly for colorization
 alias ls="ls -G"
-# alias dir="dir --colorsr=auto"
+alias l="ls -G"
 alias grep="grep --color=auto"
-# alias dmesg='dmesg --color'
-
-      # Uncomment the "Color" line in /etc/pacman.conf instead of uncommenting the following line...!
-
-      # alias pacman="pacman --color=auto"
-
-   # else
-
-      # show root@ wehen we do not have colors
-
-      PS1="\u@\h \w \$ "
-
-      # Use this other PS1 string if you want \W for root and \w  for all other users:
-      # PS1="\u@\h $(if [[ ${EUID} == 0 ]]; then echo 'echo\W'; else echo '\w'; fi) \$([[ \$? != 0 ]] && echo \":( \")\$ "
-
-   # fi
-
-    PS2="> "
-    PS3="> "
-    PS4="+ "
-
-    # Try to keep environment pollution down, EPA loves us.
-    unset safe_term match_lhs
-
-    # Try to enable the auto-completion (type: "pacman -S bash-completion" to install it).
-    [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
-
-    # Try to enable the "Command not found" hook ("pacman -S pkgfile" to install it).
-    # See also: https://wiki.archlinux.org/index.php/Bash#The_.22command_not_found.22_hook
-    [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
-#fi
-#fi
- # esac
+alias red="tput setaf 1"
+alias green="tput setaf 2"
+alias yel="tput setaf 3"
+alias blue="tput setaf 4"
